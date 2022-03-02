@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.MuiTooltip-tooltip {
+  font-size: 3rem;
+}
+
+.table-cell-trucate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.root {
+  height: 100vh;
+}
+
+.image {
+  background-image: url('https://source.unsplash.com/random');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.paper {
+  margin: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.submit {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.form {
+  margin-top: 1rem;
+}
+
+.backbutton {
+  margin-right: 1rem;
+}
+
+.instructions {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.expired_request {
+  transition: 300ms;
+}
+
+.warning_request {
+  transition: 300ms;
+}
+
+.expired_request [data-field='expiresIn'],
+.warning_request [data-field='expiresIn'] {
+  position: relative;
+}
+
+.expired_request [data-field='expiresIn']::after,
+.warning_request [data-field='expiresIn']::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  pointer-events: none;
+}
+
+.expired_request [data-field='expiresIn']::after {
+  background-color: rgb(165, 55, 55);
+}
+
+.warning_request [data-field='expiresIn']::after {
+  background-color: rgb(255, 238, 7);
+}
+
+.status_TODO {
+  transition: 300ms;
+}
+
+.status_GRAPHIC {
+  background-color: #ffc107;
+  transition: 300ms;
+}
+
+.status_DEALING {
+  background-color: #6c757d;
+  transition: 300ms;
+}
+
+.status_CANCELLED {
+  background-color: #6d4a218a;
+  transition: 300ms;
+}
+.status_COMPLETED {
+  background-color: #28a745;
+  transition: 300ms;
+}
