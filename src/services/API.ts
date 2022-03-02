@@ -1,5 +1,5 @@
 import axios from 'axios'
-const apiURL = import.meta.env.VITE_API_URL || 'https://adm.kaiomatos.com.br/api'
+const apiURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_PROD_URL
 
 const API = axios.create({
   baseURL: apiURL,
