@@ -1,10 +1,12 @@
 // React
 import { useEffect } from 'react'
 import { Route, Switch, Link as RouterLink, useHistory } from 'react-router-dom'
-import Cookies from 'js-cookie'
 
 // Material
 import { Link } from '@mui/material'
+
+// Molecules
+import { PopoverMessage } from '@components/molecules/PopoverMessage'
 
 // Organisms
 import { PrivateRoute } from '@components/organisms/PrivateRoute'
@@ -15,16 +17,16 @@ import Panel from '@pages/Panel'
 import NotFound from '@pages/NotFound'
 
 import { useGlobalMessage } from '@contexts/MessageContext'
-import { PopoverMessage } from './components/molecules/PopoverMessage'
+import { useAccount } from '@contexts/LoginContext'
 
 function App() {
   const history = useHistory()
+  const { account } = useAccount()
   const { message } = useGlobalMessage()
 
   useEffect(() => {
-    const token = Cookies.get('token')
-    if (token) history.push('/panel')
-  }, [Cookies.get('token')])
+    if (account.firstName) history.push('/panel')
+  }, [account])
 
   return (
     <div className="App">

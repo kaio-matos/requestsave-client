@@ -1,46 +1,40 @@
 // React
 import { useEffect } from 'react'
-import { Route, useHistory } from 'react-router'
-
-// Thirdparty utils
-import Cookies from 'js-cookie'
+import { useMutation } from 'react-query'
+import { Route } from 'react-router'
 
 // Molecules
 import Loading from '@components/molecules/Loading'
 
 // Utils
 import { Account } from '@api/Account'
-import { useMutation } from 'react-query'
-import { APIErrorI } from '@type/API'
+
+// Contexts
 import { useAccount } from '@contexts/LoginContext'
+import { useGlobalMessage } from '@contexts/MessageContext'
+
+// Type
+import { APIErrorI } from '@type/API'
 
 export function PrivateRoute(props: any) {
-  const { children, ...rest } = props
-  const token = Cookies.get('token')
   const { logout } = useAccount()
+  const { setMessage } = useGlobalMessage()
+
+  const { children, ...rest } = props
 
   const { isLoading, isSuccess, mutate } = useMutation(Account.checkJWT, {
-    onError: ({ response }: APIErrorI) => logout(),
+    onError: ({ response }: APIErrorI) => {
+      logout()
+      setMessage({
+        severity: 'error',
+        message: response.data.meta.cause,
+      })
+    },
   })
 
   useEffect(() => {
-    if (token) {
-      mutate(token)
-    } else {
-      logout()
-      const error = {
-        response: {
-          data: {
-            code: 'NO_TOKEN',
-            meta: {
-              cause: 'Não foi encontrado nenhum token',
-            },
-            status: 400,
-          },
-        },
-      }
-    }
-  }, [history, token])
+    mutate()
+  }, [history])
 
   function renderComponents({ location }: { location: any }) {
     return (

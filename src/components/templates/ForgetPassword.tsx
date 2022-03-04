@@ -70,6 +70,7 @@ export default function Forget() {
           message: 'Senha alterada com sucesso',
         })
 
+        // Espera o usuário ler a mensagem e então navega ele até a página login
         setTimeout(() => {
           history.push('/login')
         }, 3000)

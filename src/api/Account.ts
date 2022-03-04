@@ -9,7 +9,6 @@ import {
   resendRegisterEmailParamsBodyI,
   resetPasswordBodyI,
 } from '@type/Requests/AccountAPI'
-import { APIeditDocumentI } from '@type/API'
 
 class AccountClass {
   /**
@@ -85,12 +84,8 @@ class AccountClass {
     return response.data
   }
 
-  async checkJWT(authorizationToken: string) {
-    const response = await API.post<ResponseInterface<boolean>>(
-      API_routes.account.checkJWT,
-      {},
-      { headers: { 'authorization-token': authorizationToken } }
-    )
+  async checkJWT() {
+    const response = await API.post<ResponseInterface<boolean>>(API_routes.account.checkJWT)
     return response.data
   }
 }

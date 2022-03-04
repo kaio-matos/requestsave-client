@@ -3,14 +3,10 @@ import { Box, Button, Typography } from '@mui/material'
 import { Home } from '@mui/icons-material'
 import { Paper } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useAccount } from '@contexts/LoginContext'
 
 export default function NotFound() {
-  const [account, setAccount] = useState<string | null>()
-
-  useEffect(() => {
-    setAccount(sessionStorage.getItem('account'))
-  }, [])
-
+  const { account } = useAccount()
   return (
     <Paper
       style={{

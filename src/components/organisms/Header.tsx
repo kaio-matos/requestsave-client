@@ -1,9 +1,5 @@
 // React
 import { Link as RouterLink } from 'react-router-dom'
-import { useHistory } from 'react-router'
-
-// Third-party
-import Cookies from 'js-cookie'
 
 // Material
 import { Link, List, ListItem, ListItemIcon, ListItemText, Box, Button } from '@mui/material'
@@ -29,8 +25,8 @@ const CreateMenuItem = (label: string, icon: JSX.Element, link: string): IMenuIt
 }
 
 export default function Header() {
-  const { logout } = useAccount()
-  const isAdmin = Cookies.get('role') === 'ADMIN'
+  const { account, logout } = useAccount()
+  const isAdmin = account?.role === 'ADMIN'
 
   const menu: IMenuItem[] = [
     CreateMenuItem('Painel', <DataUsageIcon />, '/panel'),

@@ -8,14 +8,10 @@ import {
   useEffect,
   useState,
 } from 'react'
-import Cookies from 'js-cookie'
-
-// Services
-import { API } from '@services/API'
+import { useHistory } from 'react-router-dom'
 
 // Types
 import { AccountInterface } from '@type/models/Account'
-import { useHistory } from 'react-router-dom'
 
 type AccountContextData = {
   account: AccountInterface
@@ -32,28 +28,15 @@ export function LoginProvider({ children }: LoginContextProviderProps) {
   const history = useHistory()
 
   useEffect(() => {
-    function setAccountWhenChange() {
-      const cached = localStorage.getItem('account')
-      if (cached) setAccount(JSON.parse(cached))
-    }
-
-    window.addEventListener('storage', setAccountWhenChange)
-    return () => window.removeEventListener('storage', setAccountWhenChange)
+    const cached = localStorage.getItem('account')
+    if (cached) setAccount(JSON.parse(cached))
   }, [])
 
   useEffect(() => {
-    const token = Cookies.get('token')
-    if (!token) return
-
-    // Set axios api with authorization-token
-    API.defaults.headers.common['authorization-token'] = token
-  }, [Cookies.get('token')])
-
-  useEffect(() => localStorage.setItem('account', JSON.stringify(account)), [account])
+    localStorage.setItem('account', JSON.stringify(account))
+  }, [account])
 
   function logout() {
-    Cookies.remove('token')
-    Cookies.remove('role')
     localStorage.removeItem('account')
     history.push('/login')
   }

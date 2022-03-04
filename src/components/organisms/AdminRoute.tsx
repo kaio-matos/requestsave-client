@@ -1,26 +1,25 @@
 // React
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Route, useHistory } from 'react-router'
-
-// Thirdparty utils
-import Cookies from 'js-cookie'
 
 // Hooks
 import { useBoolean } from '@hooks/useBoolean'
+import { useAccount } from '@contexts/LoginContext'
 
 // Utils
 import { ROLES } from '@utils/constants'
 
 export function AdminRoute(props: any) {
-  const { children, ...rest } = props
-  const role = Cookies.get('role')
   const [success, setSuccess] = useBoolean(false)
+  const { account } = useAccount()
+
   const history = useHistory()
+  const { children, ...rest } = props
 
   useEffect(() => {
     async function verifyRole() {
-      if (role) {
-        if (role === ROLES.ADMIN) {
+      if (account?.role) {
+        if (account?.role === ROLES.ADMIN) {
           setSuccess.on()
         } else {
           setSuccess.off()
@@ -32,7 +31,7 @@ export function AdminRoute(props: any) {
       }
     }
     verifyRole()
-  }, [history, role])
+  }, [history, account?.role])
 
   function renderComponents({ location }: { location: any }) {
     return <>{success ? children : ''}</>
