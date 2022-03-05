@@ -77,7 +77,7 @@ class AccountValidate {
     const schema = yup.object({
       firstName: yup.string().required('Descreva o primeiro nome'),
       lastName: yup.string().required('Descreva o sobrenome'),
-      email: yup.string().email().required('Descreva o email'),
+      email: yup.string().email('Descreva um email válido').required('Descreva o email'),
       password: yup.string().required('Descreva a senha'),
       phoneNumber: yup
         .string()
@@ -95,7 +95,7 @@ class AccountValidate {
 
   async resendRegisterEmail(data: resendRegisterEmailFormI) {
     const schema = yup.object({
-      email: yup.string().email().required('Descreva seu email'),
+      email: yup.string().email('Descreva um email válido').required('Descreva seu email'),
     })
 
     try {
