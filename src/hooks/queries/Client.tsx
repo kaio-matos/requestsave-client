@@ -14,6 +14,13 @@ import { useQueryGetPaginationType } from '@type/hooks/queries/Query'
 
 const QUERY_NAME = 'clients'
 
+/**
+ *
+ * Pesquisa e fetching de clientes
+ *
+ */
+
+/** Recebe um array com todos os clientes de forma paginada e filtrado pelo search */
 export function useClientsQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<ClientInterface[]>, APIErrorI>(
     [QUERY_NAME, pagination],
@@ -29,10 +36,16 @@ export function useClientsQuery(pagination?: useQueryGetPaginationType, search =
   )
 }
 
+/**
+ *
+ * Criação de cliente
+ *
+ */
 async function handleClientCreation(data: ClientInterface) {
   queryClient.refetchQueries(QUERY_NAME)
 }
 
+/** Cria um cliente */
 export function useClientQueryCreate(
   options?: UseMutationOptions<ResponseInterface<ClientInterface>, APIErrorI, IClientForm>
 ) {
@@ -53,6 +66,11 @@ export function useClientQueryCreate(
   return useMutation(Client.createDocument, options)
 }
 
+/**
+ *
+ * Exclusão de cliente
+ *
+ */
 async function handleClientDelete(id: string | number) {
   const [[, previousClients]] =
     queryClient.getQueriesData<GetPagesType<ClientInterface[]>>(QUERY_NAME)
@@ -63,6 +81,7 @@ async function handleClientDelete(id: string | number) {
   }
 }
 
+/** Deleta um cliente com seu ID */
 export function useClientQueryDelete(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, { id: number | string }>
 ) {
@@ -83,6 +102,11 @@ export function useClientQueryDelete(
   return useMutation(Client.deleteDocument, options)
 }
 
+/**
+ *
+ * Alteração de cliente
+ *
+ */
 async function handleClientEdit(data: APIeditDocumentI) {
   const [[, previousClients]] =
     queryClient.getQueriesData<GetPagesType<ClientInterface[]>>(QUERY_NAME)
@@ -98,6 +122,7 @@ async function handleClientEdit(data: APIeditDocumentI) {
   }
 }
 
+/** Altera um cliente com seu ID */
 export function useClientQueryEdit(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, APIeditDocumentI>
 ) {

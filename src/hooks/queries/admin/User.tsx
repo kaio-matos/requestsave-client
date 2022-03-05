@@ -14,6 +14,13 @@ import { UserGetInterface, UserInterface } from '@type/models/Account'
 
 const QUERY_NAME = 'admin-user'
 
+/**
+ *
+ * Pesquisa e fetching de usuários
+ *
+ */
+
+/** Recebe um array com todos os usuários de forma paginada e filtrado pelo search */
 export function useAdminUserQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<UserGetInterface[]>, APIErrorI>(
     [QUERY_NAME, pagination],
@@ -29,6 +36,11 @@ export function useAdminUserQuery(pagination?: useQueryGetPaginationType, search
   )
 }
 
+/**
+ *
+ * Exclusão de usuário
+ *
+ */
 async function handleAdminUserDelete(id: string | number) {
   const [[, previousUsers]] =
     queryClient.getQueriesData<GetPagesType<UserGetInterface[]>>(QUERY_NAME)
@@ -39,6 +51,7 @@ async function handleAdminUserDelete(id: string | number) {
   }
 }
 
+/** Deleta um usuário com seu ID */
 export function useAdminUserQueryDelete(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, { id: number | string }>
 ) {
@@ -59,6 +72,11 @@ export function useAdminUserQueryDelete(
   return useMutation(Admin.User.delete, options)
 }
 
+/**
+ *
+ * Alteração de usuário
+ *
+ */
 async function handleAdminUserEdit(data: APIeditDocumentI) {
   const [[, previousUsers]] = queryClient.getQueriesData<GetPagesType<UserInterface[]>>(QUERY_NAME)
 
@@ -73,6 +91,7 @@ async function handleAdminUserEdit(data: APIeditDocumentI) {
   }
 }
 
+/** Altera um usuário com seu ID */
 export function useAdminUserQueryEdit(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, APIeditDocumentI>
 ) {
@@ -90,7 +109,7 @@ export function useAdminUserQueryEdit(
     }
   }
 
-  const mutation = useMutation(Admin.User.editRole, options)
+  const mutation = useMutation(Admin.User.edit, options)
   const mutate = mutation.mutate
   const mutateAsync = mutation.mutateAsync
 

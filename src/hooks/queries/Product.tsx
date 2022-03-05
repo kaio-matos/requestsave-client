@@ -14,6 +14,13 @@ import { useQueryGetPaginationType } from '@type/hooks/queries/Query'
 
 const QUERY_NAME = 'products'
 
+/**
+ *
+ * Pesquisa e fetching de produtos
+ *
+ */
+
+/** Recebe um array com todos os produtos de forma paginada e filtrado pelo search */
 export function useProductsQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<ProductInterface[]>, APIErrorI>(
     [QUERY_NAME, pagination],
@@ -28,10 +35,16 @@ export function useProductsQuery(pagination?: useQueryGetPaginationType, search 
   )
 }
 
+/**
+ *
+ * Criação de produto
+ *
+ */
 async function handleProductCreation(data: ProductInterface) {
   queryClient.refetchQueries(QUERY_NAME)
 }
 
+/** Cria um produto */
 export function useProductQueryCreate(
   options?: UseMutationOptions<ResponseInterface<ProductInterface>, APIErrorI, IProductForm>
 ) {
@@ -52,6 +65,11 @@ export function useProductQueryCreate(
   return useMutation(Product.createDocument, options)
 }
 
+/**
+ *
+ * Exclusão de produto
+ *
+ */
 async function handleProductDelete(id: string | number) {
   const [[, previousProducts]] =
     queryClient.getQueriesData<GetPagesType<ProductInterface[]>>(QUERY_NAME)
@@ -63,6 +81,7 @@ async function handleProductDelete(id: string | number) {
   }
 }
 
+/** Deleta um produto com seu ID */
 export function useProductQueryDelete(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, { id: number | string }>
 ) {
@@ -83,6 +102,11 @@ export function useProductQueryDelete(
   return useMutation(Product.deleteDocument, options)
 }
 
+/**
+ *
+ * Alteração de produto
+ *
+ */
 async function handleProductEdit(data: APIeditDocumentI) {
   const [[, previousProducts]] =
     queryClient.getQueriesData<GetPagesType<ProductInterface[]>>(QUERY_NAME)
@@ -98,6 +122,7 @@ async function handleProductEdit(data: APIeditDocumentI) {
   }
 }
 
+/** Altera um produto com seu ID */
 export function useProductQueryEdit(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, APIeditDocumentI>
 ) {

@@ -14,6 +14,13 @@ import { useQueryGetPaginationType } from '@type/hooks/queries/Query'
 
 const QUERY_NAME = 'requests'
 
+/**
+ *
+ * Pesquisa e fetching de pedidos
+ *
+ */
+
+/** Recebe um array com todos os pedidos de forma paginada e filtrado pelo search */
 export function useRequestsQuery(
   pagination: useQueryGetPaginationType,
   search = '',
@@ -39,10 +46,17 @@ export function useRequestsPrefetchQuery(pagination: useQueryGetPaginationType) 
   queryClient.prefetchQuery([QUERY_NAME, pagination], () => Request.getDocument(pagination))
 }
 
+/**
+ *
+ * Criação de pedido
+ *
+ */
+
 async function handleRequestCreation() {
   queryClient.refetchQueries(QUERY_NAME)
 }
 
+/** Cria um pedido */
 export function useRequestQueryCreate(
   options?: UseMutationOptions<ResponseInterface<RequestType>, APIErrorI, IRequestForm>
 ) {
@@ -63,6 +77,11 @@ export function useRequestQueryCreate(
   return useMutation(Request.createDocument, options)
 }
 
+/**
+ *
+ * Exclusão de pedido
+ *
+ */
 async function handleRequestDelete(id: string | number) {
   const [[, previousRequests]] = queryClient.getQueriesData<GetPagesType<RequestType[]>>(QUERY_NAME)
 
@@ -74,6 +93,7 @@ async function handleRequestDelete(id: string | number) {
   }
 }
 
+/** Deleta um pedido com seu ID */
 export function useRequestQueryDelete(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, { id: number | string }>
 ) {
@@ -94,6 +114,11 @@ export function useRequestQueryDelete(
   return useMutation(Request.deleteDocument, options)
 }
 
+/**
+ *
+ * Alteração de pedido
+ *
+ */
 async function handleRequestEdit(data: APIeditDocumentI) {
   const [[, previousRequests]] = queryClient.getQueriesData<GetPagesType<RequestType[]>>(QUERY_NAME)
 
@@ -107,6 +132,7 @@ async function handleRequestEdit(data: APIeditDocumentI) {
   }
 }
 
+/** Altera um pedido com seu ID */
 export function useRequestQueryEdit(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, APIeditDocumentI>
 ) {

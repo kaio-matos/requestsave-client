@@ -18,6 +18,13 @@ import { useQueryGetPaginationType } from '@type/hooks/queries/Query'
 
 const QUERY_NAME = 'admin-accountie'
 
+/**
+ *
+ * Pesquisa e fetching de vínculos
+ *
+ */
+
+/** Recebe um array com todos os vínculos de forma paginada e filtrado pelo search */
 export function useAdminAccountTiesQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<AccountTieGetInterface[]>, APIErrorI>(
     [QUERY_NAME, pagination],
@@ -32,10 +39,16 @@ export function useAdminAccountTiesQuery(pagination?: useQueryGetPaginationType,
   )
 }
 
+/**
+ *
+ * Criação de vínculo
+ *
+ */
 async function handleAccountTieCreation() {
   queryClient.refetchQueries(QUERY_NAME)
 }
 
+/** Cria um vínculo */
 export function useAdminAccountTieQueryCreate(
   options?: UseMutationOptions<
     ResponseInterface<AccountTieInterface>,
@@ -60,6 +73,11 @@ export function useAdminAccountTieQueryCreate(
   return useMutation(Admin.AccountTie.create, options)
 }
 
+/**
+ *
+ * Exclusão de vínculo
+ *
+ */
 async function handleAccountTieDelete(id: string | number) {
   const [[, previousAccountTies]] =
     queryClient.getQueriesData<GetPagesType<AccountTieInterface[]>>(QUERY_NAME)
@@ -71,6 +89,7 @@ async function handleAccountTieDelete(id: string | number) {
   }
 }
 
+/** Deleta um vínculo com seu ID */
 export function useAdminAccountTieQueryDelete(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, { id: number | string }>
 ) {
@@ -91,6 +110,11 @@ export function useAdminAccountTieQueryDelete(
   return useMutation(Admin.AccountTie.delete, options)
 }
 
+/**
+ *
+ * Alteração de vínculo
+ *
+ */
 async function handleAccountTieEdit(data: APIeditDocumentI) {
   const [[, previousAccountTies]] =
     queryClient.getQueriesData<GetPagesType<AccountTieGetInterface[]>>(QUERY_NAME)
@@ -106,6 +130,7 @@ async function handleAccountTieEdit(data: APIeditDocumentI) {
   }
 }
 
+/** Altera um vínculo com seu ID */
 export function useAdminAccountTieQueryEdit(
   options?: UseMutationOptions<ResponseInterface<boolean>, APIErrorI, APIeditDocumentI>
 ) {

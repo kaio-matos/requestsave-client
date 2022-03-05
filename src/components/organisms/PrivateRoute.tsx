@@ -22,7 +22,7 @@ export function PrivateRoute(props: any) {
 
   const { children, ...rest } = props
 
-  const { isLoading, isSuccess, mutate } = useMutation(Account.checkJWT, {
+  const { isLoading, isSuccess, mutate } = useMutation(Account.Auth.checkJWT, {
     onError: ({ response }: APIErrorI) => {
       logout()
       setMessage({

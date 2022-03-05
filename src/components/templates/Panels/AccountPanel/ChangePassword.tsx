@@ -25,7 +25,7 @@ export default function ChangePassword({ account }: { account: AccountInterface 
 
   const history = useHistory()
 
-  const { mutate } = useMutation(Account.resetPassword, {
+  const { mutate } = useMutation(Account.Auth.resetPassword, {
     onError({ response }: APIErrorI) {
       setError({ message: response.data.meta.cause, show: true })
       setSuccess({ message: '', show: false })
