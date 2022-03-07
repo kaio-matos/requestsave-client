@@ -23,8 +23,11 @@ class AdminClass {
   User = {
     route: API_routes.admin.user,
 
-    async edit(body: APIeditDocumentI) {
-      const response = await API.put<ResponseInterface<boolean>>(API_routes.admin.user, body)
+    async edit({ id, ...body }: APIeditDocumentI) {
+      const response = await API.put<ResponseInterface<boolean>>(
+        `${API_routes.admin.user}/${id}`,
+        body
+      )
       return response.data
     },
 
@@ -69,8 +72,11 @@ class AdminClass {
       )
       return response.data
     },
-    async edit(body: unknown) {
-      const response = await API.put<ResponseInterface<boolean>>(API_routes.admin.accountTie, body)
+    async edit({ id, ...body }: APIeditDocumentI) {
+      const response = await API.put<ResponseInterface<boolean>>(
+        `${API_routes.admin.accountTie}/${id}`,
+        body
+      )
       return response.data
     },
     async delete({ id }: { id: string | number }) {
