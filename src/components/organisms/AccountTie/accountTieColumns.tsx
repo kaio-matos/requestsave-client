@@ -2,6 +2,7 @@
 import { GridColDef } from '@mui/x-data-grid'
 import GridActionsCell from '@components/molecules/Grid/GridActionsCell'
 import GridToolTip from '@components/molecules/Grid/GridToolTip'
+import { PhoneNumberFormatEdit } from '@components/molecules/Grid/PhoneNumberFormat'
 
 // Types
 import { useQueryDeleteMutateType, useQueryEditMutateType } from '@type/hooks/queries/Query'
@@ -25,8 +26,10 @@ export function getAccountTieCollumns({
       field: 'phoneNumber',
       headerName: 'Número de telefone',
       flex: 1,
+      editable: true,
 
       renderCell: GridToolTip,
+      renderEditCell: PhoneNumberFormatEdit,
       headerAlign: 'left',
       align: 'left',
     },
