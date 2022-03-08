@@ -30,6 +30,18 @@ export function getRequestCollumns({
   editRequest,
 }: getRequestCollumnsType) {
   const columns: GridColDef[] = [
+    // Título
+    {
+      field: 'title',
+      headerName: 'Título',
+      description: 'Título do pedido',
+      editable: true,
+      filterable: false,
+      minWidth: 140,
+      flex: 1,
+      renderCell: GridToolTip,
+    },
+
     // Cliente
     {
       field: 'client_id',
@@ -42,18 +54,6 @@ export function getRequestCollumns({
       valueFormatter: (params) => clients.find(({ id }) => id === params.value)?.name || '',
       renderCell: (params) => <GridToolTip value={params.formattedValue} />,
       valueOptions: clients.map(({ id, name }) => ({ value: id, label: name })),
-    },
-
-    // Título
-    {
-      field: 'title',
-      headerName: 'Título',
-      description: 'Título do pedido',
-      editable: true,
-      filterable: false,
-      minWidth: 140,
-      flex: 1,
-      renderCell: GridToolTip,
     },
 
     // Produto
