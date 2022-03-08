@@ -57,6 +57,7 @@ export function getUserCollumns({ accountTies, deleteUser, editUser }: getUserCo
       type: 'singleSelect',
       flex: 1,
       editable: true,
+      filterable: false,
 
       valueFormatter: (params) =>
         accountTies.find(({ id }) => id === params.value)?.phoneNumber || '',
@@ -78,12 +79,17 @@ export function getUserCollumns({ accountTies, deleteUser, editUser }: getUserCo
     {
       field: 'confirmedEmail',
       headerName: 'Confirmou email',
+      type: 'singleSelect',
       flex: 1,
       renderCell: (params) => <GridToolTip value={params.formattedValue} />,
       valueFormatter: ({ value }) => {
         if (Boolean(value)) return 'Confirmado'
         return 'Não confirmado'
       },
+      valueOptions: [
+        { value: true, label: 'Confirmado' },
+        { value: false, label: 'Não confirmado' },
+      ],
     },
 
     // Criado em
