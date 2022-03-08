@@ -39,8 +39,8 @@ const theme = createTheme(
 )
 
 interface AccountTieAdaptedInterface extends Omit<AccountTieGetInterface, 'account'> {
-  accountName: string
-  accountEmail: string
+  accountName?: string
+  accountEmail?: string
 }
 
 export default function AccountTieTable() {
@@ -64,11 +64,14 @@ export default function AccountTieTable() {
 
   useEffect(() => {
     if (!data) return
-    const adaptedTable = data.table.map(({ account, ...rest }) => ({
-      accountName: `${account.firstName}  ${account.lastName}`,
-      accountEmail: account.email,
-      ...rest,
-    }))
+    const adaptedTable = data.table.map(({ account, ...rest }) => {
+      if (!account) return rest
+      return {
+        accountName: `${account.firstName}  ${account.lastName}`,
+        accountEmail: account.email,
+        ...rest,
+      }
+    })
     setRows(adaptedTable)
     setRowsState((prev) => ({ ...prev, rowCount: data.quantity }))
   }, [data])

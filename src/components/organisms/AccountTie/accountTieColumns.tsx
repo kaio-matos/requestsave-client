@@ -41,16 +41,18 @@ export function getAccountTieCollumns({
       headerName: 'Nome',
       description: 'Nome do usuário vinculado a este número',
       flex: 1,
-      renderCell: GridToolTip,
+      valueFormatter: ({ value }) => (value ? value : 'Não há vínculo'),
+      renderCell: ({ formattedValue }) => <GridToolTip value={formattedValue} />,
     },
 
-    // Nome
+    // Email
     {
       field: 'accountEmail',
       headerName: 'Email',
       description: 'Email do usuário vinculado a este número',
       flex: 1,
-      renderCell: GridToolTip,
+      valueFormatter: ({ value }) => (value ? value : 'Não há vínculo'),
+      renderCell: ({ formattedValue }) => <GridToolTip value={formattedValue} />,
     },
 
     // Criado em
