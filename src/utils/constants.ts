@@ -1,16 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-import { standardError } from '@components/molecules/DisplayError'
-
-import { Client } from '@api/Client'
-import { Product } from '@api/Product'
-import { Request } from '@api/Request'
-
-// Types
-import { ProductInterface } from '@type/models/Product'
-import { RequestType } from '@type/models/Request'
-import { ClientInterface } from '@type/models/Client'
-import { errorInterface } from '@type/Error'
-
 enum ROLES {
   USER = 'USER',
   ADMIN = 'ADMIN',
@@ -36,94 +23,6 @@ const STATUS_ARRAY = [
   { code: STATUS.CANCELLED, type: 'Cancelado', color: 'red' },
   { code: STATUS.COMPLETED, type: 'Completo', color: 'green' },
 ]
-
-function randomStringCharacters(length: number) {
-  var result = ''
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-  var charactersLength = characters.length
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-  return result
-}
-
-const constants = {
-  generateRandomClients() {
-    let randomClients: {
-      name: string
-      email: string
-    }[] = []
-
-    function createRandomClient() {
-      return {
-        name: randomStringCharacters(6),
-        email: randomStringCharacters(10) + '@hotmail.com',
-      }
-    }
-
-    for (let i = 0; i < 100; i++) {
-      randomClients = [...randomClients, createRandomClient()]
-    }
-
-    return randomClients
-  },
-
-  generateRandomProducts() {
-    let randomProducts: {
-      name: string
-      basePrice: number
-    }[] = []
-
-    function createRandomProduct() {
-      return {
-        name: randomStringCharacters(6),
-        basePrice: Number((Math.random() * 2000).toPrecision(2)),
-      }
-    }
-
-    for (let i = 0; i < 100; i++) {
-      randomProducts = [...randomProducts, createRandomProduct()]
-    }
-
-    return randomProducts
-  },
-
-  generateRandomRequests(client_id: string, product_id: string) {
-    let randomRequests: {
-      client_id: string
-      expiresIn: Date
-      paidOut: number
-      price: number
-      product_id: string
-      status: STATUS
-      title: string
-    }[] = []
-
-    function createRandomRequest() {
-      const oneDay = 1000 * 60 * 60 * 24
-      const plusOrMinus = Math.round(Math.random())
-      let day = 0
-      if (plusOrMinus) day = Date.now() + Math.random() * oneDay
-      else day = Date.now() - Math.random() * oneDay
-
-      return {
-        client_id,
-        expiresIn: new Date(day),
-        paidOut: Number((Math.random() * 5).toPrecision(2)),
-        price: Number((Math.random() * 50).toPrecision(2)),
-        product_id,
-        status: STATUS_ARRAY[Math.floor(Math.random() * 6)].code,
-        title: randomStringCharacters(6),
-      }
-    }
-
-    for (let i = 0; i < 100; i++) {
-      randomRequests = [...randomRequests, createRandomRequest()]
-    }
-
-    return randomRequests
-  },
-}
 
 const localeTableTranslationPTBR = {
   // Root
@@ -164,20 +63,25 @@ const localeTableTranslationPTBR = {
   filterPanelInputPlaceholder: 'Valor do filtro',
 
   // Filter operators text
-  filterOperatorContains: 'contém',
-  filterOperatorEquals: 'igual',
-  filterOperatorStartsWith: 'começa com',
-  filterOperatorEndsWith: 'termina com',
+  filterOperatorContains: 'Contém',
+  filterOperatorEquals: 'Igual',
+  filterOperatorStartsWith: 'Começa com',
+  filterOperatorEndsWith: 'Termina com',
 
-  filterOperatorIs: 'é',
-  filterOperatorNot: 'não é',
-  filterOperatorAfter: 'depois',
-  filterOperatorOnOrAfter: 'é em ou depois',
-  filterOperatorBefore: 'antes',
-  filterOperatorOnOrBefore: 'é em ou antes',
+  // Filter operators single select
+  filterOperatorIs: 'É igual a',
+  filterOperatorNot: 'Não é igual a',
 
-  filterOperatorIsEmpty: 'campo em branco',
-  filterOperatorIsNotEmpty: 'campo não está em branco',
+  // Filter operators date
+  filterOperatorAfter: 'Depois de',
+  filterOperatorOnOrAfter: 'É em ou depois',
+  filterOperatorBefore: 'Antes de',
+  filterOperatorOnOrBefore: 'É em ou antes',
+
+  // Filter operators generics
+  filterOperatorIsEmpty: 'Campo em branco',
+  filterOperatorIsNotEmpty: 'Campo não está em branco',
+  filterOperatorIsAnyOf: 'É qualquer um de',
 
   // Density selector toolbar button text
   toolbarDensity: 'Densidade',
@@ -192,4 +96,4 @@ const localeTableTranslationPTBR = {
   toolbarExportCSV: 'Baixar como CSV',
 }
 
-export { STATUS, STATUS_ARRAY, ROLES, ROLES_ARRAY, localeTableTranslationPTBR, constants }
+export { STATUS, STATUS_ARRAY, ROLES, ROLES_ARRAY, localeTableTranslationPTBR }
