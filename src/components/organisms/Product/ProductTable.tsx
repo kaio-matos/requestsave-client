@@ -9,6 +9,7 @@ import { ptBR } from '@mui/material/locale'
 
 // Molecules
 import LinearLoadingGrid from '@components/molecules/Grid/LinearLoadingGrid'
+import GridExtendedToolbar from '@components/molecules/Grid/GridExtendedToolbar'
 
 // Utils - Contexts
 import { localeTableTranslationPTBR } from '@utils/constants'
@@ -38,6 +39,7 @@ const theme = createTheme(
 export default function ProductTable() {
   const [rows, setRows] = useState<ProductInterface[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
+  const [search, setSearch] = useState('')
 
   const { setMessage } = useGlobalMessage()
 
@@ -46,7 +48,7 @@ export default function ProductTable() {
     pageSize: rowsState.pageSize,
   }
 
-  const { data, isFetching, error } = useProductsQuery(nextPage, '')
+  const { data, isFetching, error } = useProductsQuery(nextPage, search)
   const { mutateAsync: deleteProduct, isLoading: loadingDelete } = useProductQueryDelete()
   const { mutateAsync: editProduct, isLoading: loadingEdit } = useProductQueryEdit()
 
@@ -83,8 +85,15 @@ export default function ProductTable() {
             event.defaultMuiPrevented = true
           }}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: GridExtendedToolbar,
             LoadingOverlay: LinearLoadingGrid,
+          }}
+          componentsProps={{
+            toolbar: {
+              value: search,
+              handleSearch: (value: string) => setSearch(value),
+              clearSearch: () => setSearch(''),
+            },
           }}
           loading={isFetching || loadingDelete || loadingEdit}
           localeText={localeTableTranslationPTBR}

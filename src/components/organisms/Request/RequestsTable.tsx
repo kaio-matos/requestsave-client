@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 // Material
 import { Box } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { DataGrid, GridToolbar, GridRowParams } from '@mui/x-data-grid'
+import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { ptBR } from '@mui/material/locale'
 
 // Molecules
 import LinearLoadingGrid from '@components/molecules/Grid/LinearLoadingGrid'
+import GridExtendedToolbar from '@components/molecules/Grid/GridExtendedToolbar'
 
 // Utils - Contexts
 import { localeTableTranslationPTBR, STATUS, STATUS_ARRAY } from '@utils/constants'
@@ -43,6 +44,8 @@ const theme = createTheme(
 export default function RequestsTable() {
   const [rows, setRows] = useState<RequestType[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
+  const [search, setSearch] = useState('')
+
   const { setMessage } = useGlobalMessage()
 
   const currentPage = {
@@ -50,7 +53,7 @@ export default function RequestsTable() {
     pageSize: rowsState.pageSize,
   }
 
-  const { error, data, isFetching } = useRequestsQuery(currentPage, '', {
+  const { error, data, isFetching } = useRequestsQuery(currentPage, search, {
     onSuccess: (data) => {
       setRows(data.table)
       setRowsState((prev) => ({ ...prev, rowCount: data.quantity }))
@@ -153,8 +156,15 @@ export default function RequestsTable() {
             event.defaultMuiPrevented = true
           }}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: GridExtendedToolbar,
             LoadingOverlay: LinearLoadingGrid,
+          }}
+          componentsProps={{
+            toolbar: {
+              value: search,
+              handleSearch: (value: string) => setSearch(value),
+              clearSearch: () => setSearch(''),
+            },
           }}
           loading={isFetching || loadingDelete || loadingEdit}
           localeText={localeTableTranslationPTBR}

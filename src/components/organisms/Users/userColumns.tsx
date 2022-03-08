@@ -28,6 +28,7 @@ export function getUserCollumns({ accountTies, deleteUser, editUser }: getUserCo
     {
       field: 'firstName',
       headerName: 'Nome',
+      filterable: false,
       flex: 1,
       renderCell: GridToolTip,
     },
@@ -36,6 +37,7 @@ export function getUserCollumns({ accountTies, deleteUser, editUser }: getUserCo
     {
       field: 'lastName',
       headerName: 'Sobrenome',
+      filterable: false,
       flex: 1,
       renderCell: GridToolTip,
     },

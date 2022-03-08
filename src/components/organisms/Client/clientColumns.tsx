@@ -26,6 +26,7 @@ export function getClientCollumns({ deleteClient, editClient }: getRequestCollum
       field: 'name',
       headerName: 'Cliente',
       description: 'Nome do cliente',
+      filterable: false,
       editable: true,
       flex: 1,
       renderCell: GridToolTip,

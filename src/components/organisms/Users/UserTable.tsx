@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 // Material
 import { Box } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 import { ptBR } from '@mui/material/locale'
 
 // Molecules
 import LinearLoadingGrid from '@components/molecules/Grid/LinearLoadingGrid'
+import GridExtendedToolbar from '@components/molecules/Grid/GridExtendedToolbar'
 
 // Utils - Contexts
 import { localeTableTranslationPTBR } from '@utils/constants'
@@ -39,6 +40,7 @@ const theme = createTheme(
 export default function UserTable() {
   const [rows, setRows] = useState<UserInterface[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
+  const [search, setSearch] = useState('')
 
   const { setMessage } = useGlobalMessage()
 
@@ -49,7 +51,7 @@ export default function UserTable() {
 
   const { data: accountTies, refetch } = useAdminAccountTiesQuery()
 
-  const { data, isFetching, error } = useAdminUserQuery(nextPage, '')
+  const { data, isFetching, error } = useAdminUserQuery(nextPage, search)
   const { mutateAsync: deleteUser, isLoading: loadingDelete } = useAdminUserQueryDelete()
   const { mutateAsync: editUser, isLoading: loadingEdit } = useAdminUserQueryEdit({
     onSuccess: () => refetch(),
@@ -88,8 +90,15 @@ export default function UserTable() {
             event.defaultMuiPrevented = true
           }}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: GridExtendedToolbar,
             LoadingOverlay: LinearLoadingGrid,
+          }}
+          componentsProps={{
+            toolbar: {
+              value: search,
+              handleSearch: (value: string) => setSearch(value),
+              clearSearch: () => setSearch(''),
+            },
           }}
           loading={isFetching || loadingDelete || loadingEdit}
           localeText={localeTableTranslationPTBR}

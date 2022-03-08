@@ -24,6 +24,7 @@ export function getProductCollumns({ deleteProduct, editProduct }: getProductCol
       field: 'name',
       headerName: 'Produto',
       flex: 1,
+      filterable: false,
       editable: true,
       renderCell: GridToolTip,
     },

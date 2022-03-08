@@ -49,9 +49,10 @@ export function getRequestCollumns({
       field: 'title',
       headerName: 'Título',
       description: 'Título do pedido',
+      editable: true,
+      filterable: false,
       minWidth: 140,
       flex: 1,
-      editable: true,
       renderCell: GridToolTip,
     },
 

@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 // Material
 import { Box } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 import { ptBR } from '@mui/material/locale'
 
 // Molecules
 import LinearLoadingGrid from '@components/molecules/Grid/LinearLoadingGrid'
+import GridExtendedToolbar from '@components/molecules/Grid/GridExtendedToolbar'
 
 // Utils - Contexts
 import { localeTableTranslationPTBR } from '@utils/constants'
@@ -40,6 +41,7 @@ const theme = createTheme(
 export default function AccountTieTable() {
   const [rows, setRows] = useState<AccountTieGetInterface[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
+  const [search, setSearch] = useState('')
 
   const { setMessage } = useGlobalMessage()
 
@@ -48,7 +50,7 @@ export default function AccountTieTable() {
     pageSize: rowsState.pageSize,
   }
 
-  const { data, isFetching, error } = useAdminAccountTiesQuery(nextPage, '')
+  const { data, isFetching, error } = useAdminAccountTiesQuery(nextPage, search)
   const { mutateAsync: deleteAccountTie, isLoading: loadingDelete } =
     useAdminAccountTieQueryDelete()
   const { mutateAsync: editAccountTie, isLoading: loadingEdit } = useAdminAccountTieQueryEdit()
@@ -86,8 +88,15 @@ export default function AccountTieTable() {
             event.defaultMuiPrevented = true
           }}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: GridExtendedToolbar,
             LoadingOverlay: LinearLoadingGrid,
+          }}
+          componentsProps={{
+            toolbar: {
+              value: search,
+              handleSearch: (value: string) => setSearch(value),
+              clearSearch: () => setSearch(''),
+            },
           }}
           loading={isFetching || loadingDelete || loadingEdit}
           localeText={localeTableTranslationPTBR}

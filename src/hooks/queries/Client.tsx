@@ -23,7 +23,7 @@ const QUERY_NAME = 'clients'
 /** Recebe um array com todos os clientes de forma paginada e filtrado pelo search */
 export function useClientsQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<ClientInterface[]>, APIErrorI>(
-    [QUERY_NAME, pagination],
+    [QUERY_NAME, pagination, search],
     () => Client.getDocument(pagination, search),
     {
       initialData() {
@@ -31,7 +31,6 @@ export function useClientsQuery(pagination?: useQueryGetPaginationType, search =
         return cached ? cached : { quantity: 25, table: [] }
       },
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   )
 }

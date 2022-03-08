@@ -27,14 +27,14 @@ const QUERY_NAME = 'admin-accountie'
 /** Recebe um array com todos os vínculos de forma paginada e filtrado pelo search */
 export function useAdminAccountTiesQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<AccountTieGetInterface[]>, APIErrorI>(
-    [QUERY_NAME, pagination],
+    [QUERY_NAME, pagination, search],
     () => Admin.AccountTie.get(pagination, search),
     {
-      refetchOnWindowFocus: false,
       initialData() {
         const cached = queryClient.getQueryData<GetPagesType<AccountTieGetInterface[]>>(QUERY_NAME)
         return cached ? cached : { quantity: 25, table: [] }
       },
+      keepPreviousData: true,
     }
   )
 }

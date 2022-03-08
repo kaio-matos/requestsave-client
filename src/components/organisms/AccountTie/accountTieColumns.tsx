@@ -26,6 +26,7 @@ export function getAccountTieCollumns({
       field: 'phoneNumber',
       headerName: 'Número de telefone',
       flex: 1,
+      filterable: false,
       editable: true,
 
       renderCell: GridToolTip,

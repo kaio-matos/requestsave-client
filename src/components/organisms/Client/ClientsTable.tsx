@@ -2,13 +2,14 @@
 import { useState, useEffect } from 'react'
 
 // Material
-import { Box, MenuItem } from '@mui/material'
+import { Box } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 import { ptBR } from '@mui/material/locale'
 
 // Molecules
 import LinearLoadingGrid from '@components/molecules/Grid/LinearLoadingGrid'
+import GridExtendedToolbar from '@components/molecules/Grid/GridExtendedToolbar'
 
 // Utils - Context
 import { localeTableTranslationPTBR } from '@utils/constants'
@@ -36,6 +37,7 @@ const theme = createTheme(
 export default function ClientsTable() {
   const [rows, setRows] = useState<ClientInterface[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
+  const [search, setSearch] = useState('')
 
   const { setMessage } = useGlobalMessage()
 
@@ -44,7 +46,7 @@ export default function ClientsTable() {
     pageSize: rowsState.pageSize,
   }
 
-  const { data, isFetching, error } = useClientsQuery(nextPage, '')
+  const { data, isFetching, error } = useClientsQuery(nextPage, search)
   const { mutateAsync: deleteClient, isLoading: loadingDelete } = useClientQueryDelete()
   const { mutateAsync: editClient, isLoading: loadingEdit } = useClientQueryEdit()
 
@@ -81,8 +83,15 @@ export default function ClientsTable() {
             event.defaultMuiPrevented = true
           }}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: GridExtendedToolbar,
             LoadingOverlay: LinearLoadingGrid,
+          }}
+          componentsProps={{
+            toolbar: {
+              value: search,
+              handleSearch: (value: string) => setSearch(value),
+              clearSearch: () => setSearch(''),
+            },
           }}
           loading={isFetching || loadingDelete || loadingEdit}
           localeText={localeTableTranslationPTBR}

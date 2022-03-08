@@ -23,14 +23,14 @@ const QUERY_NAME = 'products'
 /** Recebe um array com todos os produtos de forma paginada e filtrado pelo search */
 export function useProductsQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<ProductInterface[]>, APIErrorI>(
-    [QUERY_NAME, pagination],
+    [QUERY_NAME, pagination, search],
     () => Product.getDocument(pagination, search),
     {
-      refetchOnWindowFocus: false,
       initialData() {
         const cached = queryClient.getQueryData<GetPagesType<ProductInterface[]>>(QUERY_NAME)
         return cached ? cached : { quantity: 25, table: [] }
       },
+      keepPreviousData: true,
     }
   )
 }

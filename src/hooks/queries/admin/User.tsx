@@ -23,7 +23,7 @@ const QUERY_NAME = 'admin-user'
 /** Recebe um array com todos os usuários de forma paginada e filtrado pelo search */
 export function useAdminUserQuery(pagination?: useQueryGetPaginationType, search = '') {
   return useQuery<GetPagesType<UserGetInterface[]>, APIErrorI>(
-    [QUERY_NAME, pagination],
+    [QUERY_NAME, pagination, search],
     () => Admin.User.get(pagination, search),
     {
       initialData() {
@@ -31,7 +31,6 @@ export function useAdminUserQuery(pagination?: useQueryGetPaginationType, search
         return cached ? cached : { quantity: 25, table: [] }
       },
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   )
 }

@@ -35,7 +35,6 @@ export function useRequestsQuery(
         return cached ? cached : { quantity: 0, table: [] }
       },
 
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       ...options,
     }
