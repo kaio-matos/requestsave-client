@@ -37,17 +37,20 @@ export function getAccountTieCollumns({
 
     // Nome
     {
-      field: 'account',
-      headerName: 'Nome | Email',
-      description: 'Nome e email do usuário vinculado a este número',
+      field: 'accountName',
+      headerName: 'Nome',
+      description: 'Nome do usuário vinculado a este número',
       flex: 1,
+      renderCell: GridToolTip,
+    },
 
-      valueFormatter: (params) => {
-        const account = params.value as Omit<AccountInterface, 'role'> | undefined
-        if (!account) return 'Nenhuma conta vinculada'
-        return `${account.firstName} ${account.lastName} | ${account.email}`
-      },
-      renderCell: ({ formattedValue }) => <GridToolTip value={formattedValue} />,
+    // Nome
+    {
+      field: 'accountEmail',
+      headerName: 'Email',
+      description: 'Email do usuário vinculado a este número',
+      flex: 1,
+      renderCell: GridToolTip,
     },
 
     // Criado em

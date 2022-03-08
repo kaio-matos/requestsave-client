@@ -38,8 +38,13 @@ const theme = createTheme(
   ptBR
 )
 
+interface AccountTieAdaptedInterface extends Omit<AccountTieGetInterface, 'account'> {
+  accountName: string
+  accountEmail: string
+}
+
 export default function AccountTieTable() {
-  const [rows, setRows] = useState<AccountTieGetInterface[]>([])
+  const [rows, setRows] = useState<AccountTieAdaptedInterface[]>([])
   const [rowsState, setRowsState] = useState<RowsStateType>({ page: 0, pageSize: 25, rowCount: 0 })
   const [search, setSearch] = useState('')
 
@@ -59,7 +64,12 @@ export default function AccountTieTable() {
 
   useEffect(() => {
     if (!data) return
-    setRows(data.table)
+    const adaptedTable = data.table.map(({ account, ...rest }) => ({
+      accountName: `${account.firstName}  ${account.lastName}`,
+      accountEmail: account.email,
+      ...rest,
+    }))
+    setRows(adaptedTable)
     setRowsState((prev) => ({ ...prev, rowCount: data.quantity }))
   }, [data])
 
