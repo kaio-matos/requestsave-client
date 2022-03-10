@@ -21,7 +21,7 @@ import { useAdminAccountTieQueryCreate } from '@hooks/queries/admin/AccountTie'
 import { errorInterface } from '@type/Error'
 import { AccountTieFormInterface } from '@type/models/AccountTie'
 
-export default function PhoneNumberForm() {
+export default function AccountTieForm() {
   const { getValues, reset, control } = useForm<AccountTieFormInterface>()
   const [error, setError] = useState<errorInterface>()
 

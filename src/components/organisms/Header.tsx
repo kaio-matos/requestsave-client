@@ -38,7 +38,7 @@ export default function Header() {
   function AdminButtons() {
     const adminMenu: IMenuItem[] = [
       CreateMenuItem('Usuários', <SupervisedUserCircleIcon />, '/panel/admin/users'),
-      CreateMenuItem('Números', <ContactPhoneIcon />, '/panel/admin/accountties'),
+      CreateMenuItem('Vínculos', <ContactPhoneIcon />, '/panel/admin/accountties'),
     ]
 
     return (

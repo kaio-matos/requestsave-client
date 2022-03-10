@@ -9,7 +9,6 @@ import { useQueryDeleteMutateType, useQueryEditMutateType } from '@type/hooks/qu
 
 // Utils
 import { formatDate } from '@utils/formatDate'
-import { AccountInterface } from '@type/models/Account'
 import AccountTieValidate from '@validations/AccountTieValidate'
 
 type getAccountTieCollumnsType = {
