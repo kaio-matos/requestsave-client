@@ -28,6 +28,7 @@ import { RowsStateType } from '@type/table/RowsState'
 
 // Columns
 import { getAccountTieCollumns } from './accountTieColumns'
+import { AccountTieAdaptedInterface } from '@type/table/AccountTieTable'
 
 const theme = createTheme(
   {
@@ -37,11 +38,6 @@ const theme = createTheme(
   },
   ptBR
 )
-
-interface AccountTieAdaptedInterface extends Omit<AccountTieGetInterface, 'account'> {
-  accountName?: string
-  accountEmail?: string
-}
 
 export default function AccountTieTable() {
   const [rows, setRows] = useState<AccountTieAdaptedInterface[]>([])

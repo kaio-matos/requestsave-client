@@ -15,11 +15,11 @@ import Loading from '@components/molecules/Loading'
 import AccountTieValidate from '@validations/AccountTieValidate'
 
 // Hooks
-import { errorInterface } from '@type/Error'
-import { AccountTieFormInterface } from '@type/models/AccountTie'
 import { useAdminAccountTieQueryCreate } from '@hooks/queries/admin/AccountTie'
 
 // Types
+import { errorInterface } from '@type/Error'
+import { AccountTieFormInterface } from '@type/models/AccountTie'
 
 export default function PhoneNumberForm() {
   const { getValues, reset, control } = useForm<AccountTieFormInterface>()

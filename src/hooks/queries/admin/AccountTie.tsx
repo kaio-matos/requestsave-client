@@ -15,6 +15,7 @@ import {
   AccountTieInterface,
 } from '@type/models/AccountTie'
 import { useQueryGetPaginationType } from '@type/hooks/queries/Query'
+import { AccountTieAdaptedInterface } from '@type/table/AccountTieTable'
 
 const QUERY_NAME = 'admin-accountie'
 
@@ -153,11 +154,11 @@ export function useAdminAccountTieQueryEdit(
   const mutateAsync = mutation.mutateAsync
 
   const removeUndesirablePartsThenMutate = (data: APIeditDocumentI) => {
-    const { account, ...rest } = data as AccountTieGetInterface
+    const { accountName, accountEmail, ...rest } = data as AccountTieAdaptedInterface
     return mutate(rest)
   }
   const removeUndesirablePartsThenAsyncMutate = (data: APIeditDocumentI) => {
-    const { account, ...rest } = data as AccountTieGetInterface
+    const { accountName, accountEmail, ...rest } = data as AccountTieAdaptedInterface
     return mutateAsync(rest)
   }
 
